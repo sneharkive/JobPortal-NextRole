@@ -2,3 +2,16 @@
 
 @import "tailwindcss";
 
+@layer base{
+  ul, ol{
+    list-style-type: revert;
+    font-size: medium;
+  }
+  p{
+    font-size: medium;
+  }
+  li{
+    margin-left: 1rem;
+  }
+}
+

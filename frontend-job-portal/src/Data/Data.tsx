@@ -86,6 +86,21 @@ const testimonials = [
         "rating": 4
     },
     {
+        "name": "Swapnil Pandey",
+        "testimonial": "I secured a job offer within days of applying. Exceptional user experience and support.",
+        "rating": 4
+    },
+    {
+        "name": "Swapnil Pandey",
+        "testimonial": "I secured a job offer within days of applying. Exceptional user experience and support.",
+        "rating": 4
+    },
+    {
+        "name": "Swapnil Pandey",
+        "testimonial": "I secured a job offer within days of applying. Exceptional user experience and support.",
+        "rating": 4
+    },
+    {
         "name": "Pavan Barnana",
         "testimonial": "Highly efficient job portal with excellent resources. Helped me land a great position.",
         "rating": 4

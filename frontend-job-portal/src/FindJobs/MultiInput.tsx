@@ -90,7 +90,9 @@ const MultiInput = (props:any) => {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
+        <Combobox.Options
+        className="max-h-70 scroll-smooth overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700"
+        >
           {options}
 
           {!exactOptionMatch && search.trim().length > 0 && (

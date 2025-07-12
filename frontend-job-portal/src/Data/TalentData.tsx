@@ -14,7 +14,7 @@ const talents = [
       about: "As a Software Engineer at Google, I specialize in building scalable and high-performance applications. My expertise lies in integrating front-end and back-end technologies to deliver seamless user experiences. With a strong foundation in React and SpringBoot, and a focus on MongoDB for database solutions, I am passionate about leveraging the latest technologies to solve complex problems and drive innovation. My goal is to create impactful software that enhances productivity and meets user needs effectively.",
       expectedCtc: "₹48 - 60LPA",
       location: "New York, United States",
-      image:"avatar"
+      image:"avatar1"
     },
     {
       name: "Alice Johnson",
@@ -34,7 +34,7 @@ const talents = [
       about: "As a Backend Developer at Amazon, I specialize in server-side development and database management. My skills in Node.js and Express allow me to build robust and scalable APIs, while my experience with MySQL ensures efficient data handling and storage. I am passionate about optimizing backend processes to support high-traffic applications and improve system performance. My approach to development emphasizes reliability, security, and the ability to adapt to evolving technological demands.",
       expectedCtc: "₹50 - 65LPA",
       location: "Seattle, United States",
-      image:"avatar"
+      image:"avatar1"
     },
     {
         name: "Diana Prince",
@@ -54,7 +54,7 @@ const talents = [
       about: "As a Full Stack Developer at Microsoft, I work on developing end-to-end solutions for web applications. My expertise in Python and Django for backend development, combined with React for frontend, allows me to create cohesive and high-performing applications. I am adept at managing the entire development lifecycle, from designing intuitive user interfaces to implementing robust server-side logic. My goal is to deliver comprehensive solutions that meet both user needs and business objectives.",
       expectedCtc: "₹45 - 60LPA",
       location: "Redmond, United States",
-      image:"avatar"
+      image:"avatar3"
     },
     {
         name: "Fiona Gallagher",
@@ -74,7 +74,7 @@ const talents = [
       about: "As a Data Scientist at IBM, I leverage my skills in Python, R, and machine learning to analyze complex datasets and generate actionable insights. My work involves building predictive models and data-driven solutions to support strategic decision-making and business growth. I am committed to exploring innovative techniques and methodologies to enhance data analysis and drive meaningful outcomes. My goal is to turn data into valuable information that can help organizations solve problems and seize opportunities.",
       expectedCtc: "₹55 - 70LPA",
       location: "Austin, United States",
-      image:"avatar"
+      image:"avatar3"
     },    
     {
         name: "Helen Mirren",
@@ -94,7 +94,7 @@ const talents = [
         about: "As a Cybersecurity Analyst at Cisco, I focus on safeguarding organizations from cyber threats through proactive security measures. My skills in penetration testing, network security, and ethical hacking enable me to identify vulnerabilities and implement effective countermeasures. I am dedicated to protecting sensitive data and ensuring compliance with security standards. My approach involves continuous monitoring, threat analysis, and incident response to maintain robust security posture and mitigate risks in an ever-evolving threat landscape.",
         expectedCtc: "₹60 - 75LPA",
         location: "San Jose, United States",
-        image:"avatar"
+        image:"avatar1"
       }
   ];
   const profile={
@@ -113,14 +113,14 @@ const talents = [
         endDate: "Present",
         description: "As a Software Engineer at Google, I am responsible for designing, developing, and maintaining scalable software solutions that enhance user experience and improve operational efficiency. My role involves collaborating with cross-functional teams to define project requirements, develop technical specifications, and implement robust applications using cutting-edge technologies. I actively participate in code reviews, ensuring adherence to best practices and coding standards, and contribute to the continuous improvement of the development process."
       },
-      {
-        title: "Software Engineer",
-        company: "Microsoft",
-        location: "Seattle, United States",
-        startDate: "Jun 2018",
-        endDate: "Mar 2022",
-        description: "At Microsoft, I worked on developing and optimizing cloud-based applications, focusing on enhancing performance and scalability. I collaborated with product managers and designers to create innovative features that improved user engagement. My responsibilities included writing clean, maintainable code, performing code reviews, and mentoring junior developers. I played a key role in migrating legacy applications to modern cloud infrastructure, resulting in significant cost savings and improved efficiency."
-      }
+      // {
+      //   title: "Software Engineer",
+      //   company: "Microsoft",
+      //   location: "Seattle, United States",
+      //   startDate: "Jun 2018",
+      //   endDate: "Mar 2022",
+      //   description: "At Microsoft, I worked on developing and optimizing cloud-based applications, focusing on enhancing performance and scalability. I collaborated with product managers and designers to create innovative features that improved user engagement. My responsibilities included writing clean, maintainable code, performing code reviews, and mentoring junior developers. I played a key role in migrating legacy applications to modern cloud infrastructure, resulting in significant cost savings and improved efficiency."
+      // }
     ],
     certifications: [
       {
