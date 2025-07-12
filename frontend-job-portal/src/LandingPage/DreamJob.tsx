@@ -57,7 +57,9 @@ const DreamJob = () => {
           <div className="max-w-[30rem]">
             <img src="Boy.png" alt="Boy" />
           </div>
-          <div className="absolute top-[50%] right-10 w-fit border-amber-300 border rounded-lg p-2 backdrop-blur-md">
+
+
+          {/* <div className="absolute top-[50%] right-10 w-fit border-amber-300 border rounded-lg p-2 backdrop-blur-md">
             <div className="text-center mb-1 text-sm text-white ">
               10K+ got job
             </div>
@@ -67,8 +69,8 @@ const DreamJob = () => {
               <Avatar src="avatar3.png" />
               <Avatar>+9K</Avatar>
             </AvatarGroup>
-          </div>
-
+          </div> */}
+{/* 
           <div className="absolute top-[60%] md:top-[35%] md:right-[35%] w-fit border-amber-300 border rounded-lg p-2 backdrop-blur-md">
 
 
@@ -88,7 +90,10 @@ const DreamJob = () => {
                 <span>1day ago</span>
                 <span>120 Applicants</span>
               </div>
-          </div>
+          </div> */}
+
+
+          
         </div>
 
         
