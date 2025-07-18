@@ -21,6 +21,8 @@ import CompanyPage from "./Pages/CompanyPage";
 import PostedJobPage from "./Pages/PostedJobPage";
 import '@mantine/dates/styles.css';
 import JobHistoryPage from "./Pages/JobHistoryPage";
+import SignUpPage from "./Pages/SignUpPage";
+import ProfilePage from "./Pages/ProfilePage";
 function App() {
   return (
     <MantineProvider defaultColorScheme="dark">
@@ -38,6 +40,9 @@ function App() {
           <Route path="/posted-job" element={<PostedJobPage />} />
           <Route path="/post-jobs" element={<PostJobPage />} />
           <Route path="/job-history" element={<JobHistoryPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<SignUpPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<HomePage />} />
         </Routes>
         <Footer />

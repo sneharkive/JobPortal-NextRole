@@ -1,8 +1,11 @@
 {
   "cSpell.words": [
     "Certi",
+    "jobportal",
     "Pinterest",
     "Shivam",
     "tabler"
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

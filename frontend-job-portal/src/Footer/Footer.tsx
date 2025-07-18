@@ -1,8 +1,10 @@
 import { IconAsset } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
-  return (
+  const location = useLocation();
+  
+  return location.pathname != "/signup" && location.pathname != "/login" &&  (
     <footer className="bg-zinc-900 ">
       <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
