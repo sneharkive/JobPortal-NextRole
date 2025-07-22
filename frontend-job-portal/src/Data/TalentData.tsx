@@ -113,14 +113,14 @@ const talents = [
         endDate: "Present",
         description: "As a Software Engineer at Google, I am responsible for designing, developing, and maintaining scalable software solutions that enhance user experience and improve operational efficiency. My role involves collaborating with cross-functional teams to define project requirements, develop technical specifications, and implement robust applications using cutting-edge technologies. I actively participate in code reviews, ensuring adherence to best practices and coding standards, and contribute to the continuous improvement of the development process."
       },
-      // {
-      //   title: "Software Engineer",
-      //   company: "Microsoft",
-      //   location: "Seattle, United States",
-      //   startDate: "Jun 2018",
-      //   endDate: "Mar 2022",
-      //   description: "At Microsoft, I worked on developing and optimizing cloud-based applications, focusing on enhancing performance and scalability. I collaborated with product managers and designers to create innovative features that improved user engagement. My responsibilities included writing clean, maintainable code, performing code reviews, and mentoring junior developers. I played a key role in migrating legacy applications to modern cloud infrastructure, resulting in significant cost savings and improved efficiency."
-      // }
+      {
+        title: "Software Engineer",
+        company: "Microsoft",
+        location: "Seattle, United States",
+        startDate: "Jun 2018",
+        endDate: "Mar 2022",
+        description: "At Microsoft, I worked on developing and optimizing cloud-based applications, focusing on enhancing performance and scalability. I collaborated with product managers and designers to create innovative features that improved user engagement. My responsibilities included writing clean, maintainable code, performing code reviews, and mentoring junior developers. I played a key role in migrating legacy applications to modern cloud infrastructure, resulting in significant cost savings and improved efficiency."
+      }
     ],
     certifications: [
       {

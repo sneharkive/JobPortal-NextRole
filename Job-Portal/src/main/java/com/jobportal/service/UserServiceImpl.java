@@ -42,11 +42,15 @@ public class UserServiceImpl implements UserService{
   @Autowired
   private JavaMailSender mailSender;
 
+  @Autowired
+  private ProfileService profileService;
+
 
   @Override
   public UserDTO registerUser(UserDTO userDTO) throws JobPortalException {
     Optional<User> opt = userRepository.findByEmail(userDTO.getEmail());
     if(opt.isPresent()) throw new JobPortalException("USER_FOUND");
+    userDTO.setProfileId(profileService.createProfile(userDTO.getEmail()));
     userDTO.setId(Utilities.getNextSequence("users"));
     userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
     User user = userDTO.toEntity();
