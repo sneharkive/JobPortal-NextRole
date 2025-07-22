@@ -1,31 +1,35 @@
 import "./App.css";
 import "@mantine/core/styles.css";
+import "@mantine/carousel/styles.css";
+import "@mantine/tiptap/styles.css";
+import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
 
 import {  MantineProvider } from "@mantine/core";
-import HomePage from "./Pages/HomePage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./Header/Header";
+import { Notifications } from '@mantine/notifications';
 
-import "@mantine/core/styles.css";
-import "@mantine/carousel/styles.css";
-import Footer from "./Footer/Footer";
-import FindJobsPage from "./Pages/FindJobsPage";
-import FindTalentsPage from "./Pages/FindTalentsPage";
-import TalentProfilePage from "./Pages/TalentProfilePage";
-import PostJobPage from "./Pages/PostJobPage";
-import "@mantine/core/styles.css";
-import "@mantine/tiptap/styles.css";
-import JobDescPage from "./Pages/JobDescPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
 import ApplyJobPage from "./Pages/ApplyJobPage";
 import CompanyPage from "./Pages/CompanyPage";
-import PostedJobPage from "./Pages/PostedJobPage";
-import '@mantine/dates/styles.css';
+import FindJobsPage from "./Pages/FindJobsPage";
+import FindTalentsPage from "./Pages/FindTalentsPage";
+import HomePage from "./Pages/HomePage";
+import JobDescPage from "./Pages/JobDescPage";
 import JobHistoryPage from "./Pages/JobHistoryPage";
-import SignUpPage from "./Pages/SignUpPage";
+import PostedJobPage from "./Pages/PostedJobPage";
+import PostJobPage from "./Pages/PostJobPage";
 import ProfilePage from "./Pages/ProfilePage";
+import SignUpPage from "./Pages/SignUpPage";
+import TalentProfilePage from "./Pages/TalentProfilePage";
+
+
+
 function App() {
   return (
     <MantineProvider defaultColorScheme="dark">
+      <Notifications  position="top-center" zIndex={1000}/>
       <BrowserRouter>
         <div className="relative">
         
