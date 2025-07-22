@@ -7,13 +7,14 @@ import {
   TextInput,
   Radio,
   Group,
+  LoadingOverlay,
 } from "@mantine/core";
-import { IconAt, IconCheck, IconLock, IconX } from "@tabler/icons-react";
+import { IconAt, IconLock } from "@tabler/icons-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { registerUser } from "../../Service/UserService";
 import { signupValidation } from "../../Service/FormValidation";
-import { notifications } from "@mantine/notifications";
+import { ErrorNotification, SuccessNotification } from "../../Service/NotificationService";
 
 const SignUp = () => {
   const form = {
@@ -26,6 +27,8 @@ const SignUp = () => {
   const [data, setData] = useState<{ [key: string]: string }>(form);
 
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -75,38 +78,39 @@ const SignUp = () => {
     setFormError(newFromError);
 
     if (valid === true)
+      setLoading(true);
       registerUser(data)
         .then((res) => {
           console.log(res);
           setData(form);
-          notifications.show({
-            title: "Registered Successfully.",
-            message: "Redirecting to Login Page...",
-            withCloseButton: true,
-            icon: <IconCheck style={{ width: "90%", height: "90%" }} />,
-            color: "teal.4",
-            withBorder: true,
-            className: "!border-teal-500",
-          });
+          SuccessNotification("Registration Successful", "Redirecting to Login Page..." );
+
           setTimeout(() => {
+            setLoading(false);
             navigate("/login")
-          }, 4000)
+          }, 2000)
         })
         .catch((error) => {
+          setLoading(false);
           console.log(error.response);
-            notifications.show({
-            title: "Registration Failed!!.",
-            message: error.response.data.errorMessage,
-            withCloseButton: true,
-            icon: <IconX style={{ width: "90%", height: "90%" }} />,
-            color: "red.4",
-            withBorder: true,
-            className: "!border-red-500",
-          });
+            ErrorNotification(
+          "Registration Failed",
+          error.response.data.errorMessage
+        );
         });
   };
 
-  return (
+
+  return (<>
+  <LoadingOverlay
+          visible={loading}
+          className="translate-x-1/2"
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+          loaderProps={{ color:"yellow.5", type:"bars"}}
+        />
+  
+
     <div className="flex gap-4 justify-center flex-col w-1/2 px-20">
       <div className="text-2xl font-semibold">Create Account</div>
       <TextInput
@@ -187,6 +191,7 @@ const SignUp = () => {
         color="#FFD230"
         autoContrast
         variant="filled"
+        loading={loading}
       >
         Sign Up
       </Button>
@@ -196,7 +201,7 @@ const SignUp = () => {
           Login
         </span>
       </div>
-    </div>
+    </div>  </>
   );
 };
 
