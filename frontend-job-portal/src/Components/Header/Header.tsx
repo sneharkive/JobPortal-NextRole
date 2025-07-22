@@ -39,39 +39,8 @@ const Header = () => {
                 <IconBell size={19} className="transition hover:scale-120" />
               </Indicator>
             </div>
-            <div className="sm:flex sm:gap-4">
-              {/* <Link
-                className="hidden rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring focus:ring-teal-300 md:block"
-                to="/signup"
-              >
-                Sign in
-              </Link> */}
-
-              {/* <a
-                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 sm:block"
-                href="#"
-              >
-                Sign up
-              </a> */}
-            </div>
-
-            {/* <button
-              type="button"
-              // onClick={imgHandler}
-              className="overflow-hidden rounded-full border border-gray-300 shadow-inner dark:border-gray-600"
-            >
-              <span className="sr-only">Toggle dashboard menu</span>
-
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-                className="size-10 object-cover cursor-pointer"
-              />
-            </button> */}
 
             <ProfileMenu />
-
-            
 
             <div className="block md:hidden">
               <button
