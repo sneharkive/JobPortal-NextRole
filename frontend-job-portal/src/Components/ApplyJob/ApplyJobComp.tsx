@@ -158,7 +158,7 @@ const ApplyJobComp = () => {
       </div>
       <Notification
         className={`z-[1001] !border-amber-300 transition duration-300 ease-in-out ${
-          submit ? "translate-y-0" : "-translate-y-30"
+          submit ? "translate-y-0" : "-translate-y-40"
         } !fixed top-20 left-[35%]`}
         icon={<IconCheck style={{ width: rem(20), height: rem(20) }} />}
         color="teal"

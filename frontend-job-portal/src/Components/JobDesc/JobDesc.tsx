@@ -2,27 +2,28 @@ import { ActionIcon, Button, Divider } from "@mantine/core";
 import { IconBookmark } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { card, desc, skills } from "../../Data/JobDescData";
+import { card } from "../../Data/JobDescData";
+import { timeAgo } from "../../Service/Utilities";
 
 const JobDesc = (props:any) => {
-  const data = DOMPurify.sanitize(desc);
+  const data = DOMPurify.sanitize(props.description);
 
   return (
     <div className="w-2/3">
       <div className="flex justify-between">
         <div className="flex gap-4 items-center">
           <div className="p-3 rounded-xl bg-zinc-700">
-            <img className="w-14" src={`/Icons/Google.png`} alt="" />
+            <img className="w-14" src={`/Icons/${props.company}.png`} alt="" />
           </div>
           <div className="flex flex-col gap-2">
-            <div className="text-2xl font-semibold">Software Engineer</div>
+            <div className="text-2xl font-semibold">{props.jobTitle}</div>
             <div className="text-gray-500 text-lg">
-              Google &bull; 3 days ago &bull; 48 applicants
+              {props.company} &bull; {timeAgo(props.postedDate)} &bull; {props.applicants? props.applicants.length : 0} applicants
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-          <Link to="/apply-job">
+          <Link to={`/apply-job/${props.id}`} className="w-full"  >
             <Button className="!text-xl !pb-1" color="#FDC700" variant="light">
               {props.edit?"Edit":"Apply"}
             </Button>
@@ -54,7 +55,7 @@ const JobDesc = (props:any) => {
               />
             </ActionIcon>
             <div className="text-gray-400">{item.name}</div>
-            <div className="font-semibold text-gray-300">{item.value}</div>
+            <div className="font-semibold text-gray-300">{props?props[item.id]: "NA"} {item.id == "packageOffered" && <>LPA</>}</div>
           </div>
         ))}
       </div>
@@ -63,7 +64,7 @@ const JobDesc = (props:any) => {
       <div>
         <div className="text-xl font-semibold mb-5">Required Skills</div>
         <div className="flex flex-wrap gap-2">
-          {skills.map((sk, index) => (
+          {props?.skillsRequired?.map((sk:any, index:number) => (
             <ActionIcon
               variant="light"
               color="rgba(245, 193, 64, 1)"
@@ -94,14 +95,14 @@ const JobDesc = (props:any) => {
           <div className="flex justify-between mb-3 text-justify">
             <div className="flex gap-4 items-center">
               <div className="p-3 rounded-xl bg-zinc-700">
-                <img className="h-8" src={`/Icons/Google.png`} alt="" />
+                <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
               </div>
               <div className="flex flex-col">
-                <div className="text-lg font-semibold">Google</div>
+                <div className="text-lg font-semibold">{props.company}</div>
                 <div className="text-gray-500">10K+ Employees</div>
               </div>
             </div>
-            <Link to="/company">
+            <Link to={`/company/${props.company}`} className="w-full">
               <Button
                 className="!text-lg !pb-1"
                 color="#FDC700"

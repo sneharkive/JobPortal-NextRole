@@ -1,17 +1,18 @@
 import { Button } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApplyJobComp from "../Components/ApplyJob/ApplyJobComp";
 
 const ApplyJobPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="mb-16 min-h-[90vh] p-4">
-      <Link className="inline-block m-6" to="/jobs">
-        <Button leftSection={<IconArrowLeft />} color="#FDC700" variant="light">
+
+        <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft />} color="#FDC700" variant="light">
           {" "}
           Back
         </Button>
-      </Link>
+
       <ApplyJobComp />
     </div>
   );
