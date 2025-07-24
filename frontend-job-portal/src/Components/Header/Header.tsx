@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconAsset, IconBell } from "@tabler/icons-react";
 import { Button, Indicator } from "@mantine/core";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../Service/ProfileService";
+import { setProfile } from "../../Slices/ProfileSlice";
 
 const Header = () => {
   const user = useSelector((state: any) => state.user);
   const location = useLocation();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getProfile(user.id)
+      .then((data: any) => {
+        dispatch(setProfile(data));
+        console.log(data);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
