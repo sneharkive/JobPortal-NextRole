@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jobportal.dto.ApplicantDTO;
 import com.jobportal.dto.JobDTO;
 import com.jobportal.dto.ProfileDTO;
+import com.jobportal.dto.ResponseDTO;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.service.JobService;
 
@@ -46,6 +48,12 @@ public class JobAPI {
   @GetMapping("/get/{id}")
   public ResponseEntity<JobDTO> getJob( @PathVariable Long id) throws JobPortalException  {
     return new ResponseEntity<>(jobService.getJob(id), HttpStatus.OK);
+  }
+
+  @PostMapping("/apply/{id}")
+  public ResponseEntity<ResponseDTO> applyJob( @PathVariable Long id, @RequestBody @Valid ApplicantDTO applicantDTO) throws JobPortalException  {
+    jobService.applyJob(id, applicantDTO);
+    return new ResponseEntity<>(new ResponseDTO ("Applied Successfully") , HttpStatus.OK);
   }
   
 

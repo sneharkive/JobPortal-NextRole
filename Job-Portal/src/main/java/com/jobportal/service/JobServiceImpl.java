@@ -1,19 +1,23 @@
 package com.jobportal.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jobportal.dto.ApplicantDTO;
+import com.jobportal.dto.ApplicationStatus;
 import com.jobportal.dto.JobDTO;
+import com.jobportal.entity.Applicant;
+import com.jobportal.entity.Job;
 import com.jobportal.exception.JobPortalException;
 import com.jobportal.repository.JobRepository;
 import com.jobportal.utility.Utilities;
 
-
 @Service
-public class JobServiceImpl implements JobService{
+public class JobServiceImpl implements JobService {
 
   @Autowired
   private JobRepository jobRepository;
@@ -32,10 +36,22 @@ public class JobServiceImpl implements JobService{
   }
 
   @Override
-  public JobDTO getJob(Long id)  throws JobPortalException{
+  public JobDTO getJob(Long id) throws JobPortalException {
     return jobRepository.findById(id).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND")).toDTO();
   }
 
-  
+  @Override
+  public void applyJob(Long id, ApplicantDTO applicantDTO) throws JobPortalException {
+    Job job = jobRepository.findById(id).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+    List<Applicant> applicants = job.getApplicants();
+    if (applicants == null)
+      applicants = new ArrayList<>();
+    if (applicants.stream().filter((x) -> x.getApplicantId() == applicantDTO.getApplicantId()).toList().size() > 0)
+      throw new JobPortalException("JOB_APPLIED_ALREADY");
+    applicantDTO.setApplicationStatus(ApplicationStatus.APPLIED);
+    applicants.add(applicantDTO.toEntity());
+    job.setApplicants(applicants);
+    jobRepository.save(job);
+  }
 
 }

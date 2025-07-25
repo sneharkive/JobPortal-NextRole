@@ -18,7 +18,7 @@ const JobDesc = (props:any) => {
           <div className="flex flex-col gap-2">
             <div className="text-2xl font-semibold">{props.jobTitle}</div>
             <div className="text-gray-500 text-lg">
-              {props.company} &bull; {timeAgo(props.postedDate)} &bull; {props.applicants? props.applicants.length : 0} applicants
+              {props.company} &bull; {timeAgo(props.postTime)} &bull; {props.applicants? props.applicants.length : 0} applicants
             </div>
           </div>
         </div>
