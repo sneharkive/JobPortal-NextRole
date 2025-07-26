@@ -1,13 +1,13 @@
 import { Button } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import JobDesc from "../Components/JobDesc/JobDesc";
 import RecommendedJobs from "../Components/JobDesc/RecommendedJobs";
 import { useState,useEffect } from "react";
 import { getJobById } from "../Service/JobService";
 
 const JobDescPage = () => {
-
+  const navigate = useNavigate();
   const {id} = useParams<{ id: string }>();
   const [job, setJob] = useState<any>(null);
 
@@ -26,14 +26,13 @@ const JobDescPage = () => {
 
   return (
     <div className="mb-16 min-h-[90vh] p-4">
-      <Link 
-      className="inline-block m-6"
-       to="/find-jobs">
-        <Button leftSection={<IconArrowLeft /> } color="#FDC700" variant="light">
+      <div 
+      className="inline-block m-6">
+        <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft /> } color="#FDC700" variant="light">
           {" "}
           Back
         </Button>
-      </Link>
+      </div>
 
 
       <div className="flex gap-6 justify-around">

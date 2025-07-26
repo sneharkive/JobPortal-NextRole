@@ -6,11 +6,36 @@ import {
   IconClock,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { timeAgo } from "../../Service/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
+import { useEffect } from "react";
 
 const Card = (props: any) => {
+    const dispatch = useDispatch();
+
+  const profile = useSelector((state: any) => state.profile);
+
+
+  const handleSaveJob = () => {
+  let savedJobs = profile.savedJobs ? [...profile.savedJobs] : [];
+
+  if (savedJobs.includes(props.id)) 
+    savedJobs = savedJobs.filter((id) => id !== props.id);
+   else 
+    savedJobs.push(props.id);
+
+  const updatedProfile = { ...profile, savedJobs };
+  dispatch(changeProfile(updatedProfile));
+};
+
+// useEffect (() => {
+
+// }, [])
+
+
   return (
-    <Link
-      to="/jobs"
+    <div
       className="w-96 min-h-[350px] flex flex-col gap-6 my-4 bg-zinc-800 p-6 rounded-xl hover:border-amber-400 hover:border-2  "
     >
       <div className="flex justify-between">
@@ -20,18 +45,12 @@ const Card = (props: any) => {
         <div>
           <div>{props.jobTitle}</div>
           <div className="text-gray-500">
-            {props.company} &#x2022; {props.applicants} Applicants
+            {props.company} &#x2022;{props.applicants?props.applicants.length:0} Applicants
           </div>
         </div>
         <div>
-          {props.saved ? (
-            <IconBookmarkFilled
-              className="text-gray-300 cursor-pointer hover:scale-108"
-              color="#FDC700"
-            />
-          ) : (
-            <IconBookmark className="text-gray-300 cursor-pointer hover:scale-108" />
-          )}
+          {profile.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className='!text-amber-300 cursor-pointer hover:!text-amber-400'/>  
+          : <IconBookmark onClick={handleSaveJob}  className='text-gray-300 cursor-pointer hover:text-amber-300'/>}
         </div>
       </div>
 
@@ -47,16 +66,16 @@ const Card = (props: any) => {
         </div>
       </div>
 
-      <div className="text-justify text-sm">{props.description}</div>
+      <div className="text-justify text-sm">{props.about}</div>
 
       <Divider />
 
       <div className="flex justify-between">
-        <div className="font-bold" >&#8377;{props.package}</div>
+        <div className="font-bold" >&#8377;{props.packageOffered} LPA</div>
         <div className="flex items-center text-sm text-gray-400">
           <IconClock stroke={1.5} className="h-4 " />{" "}
           {props.applied ? "Applied" : props.offered ? "Interviewed" : "Posted"}{" "}
-          {props.postedDaysAgo} days ago.
+          {timeAgo(props.postTime)}
         </div>
       </div>
       {(props.offered || props.interviewing) && <Divider />}
@@ -76,7 +95,11 @@ const Card = (props: any) => {
           <IconCalendarMonth className="text-amber-400 w-5 h-5" stroke={1.5} /> Sun, 25 August &bull; <span className="text-gray-400">10:00 AM</span>
         </div>
       )}
-    </Link>
+
+      <Link to={`/jobs/${props.id}`}>
+        <Button fullWidth color="yellow.6" variant="outline" >View Job</Button>
+      </Link>
+    </div>
   );
 };
 
