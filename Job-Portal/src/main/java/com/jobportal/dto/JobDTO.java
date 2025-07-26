@@ -3,7 +3,6 @@ package com.jobportal.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.jobportal.entity.Applicant;
 import com.jobportal.entity.Job;
 
 import lombok.AllArgsConstructor;

@@ -27,6 +27,7 @@ public class Profile {
   private String location;
   private String about;
   private byte[] picture;
+  private List<Long>savedJobs;
 
   private List<String> skills;
   private List<Experience> experiences;
@@ -34,7 +35,7 @@ public class Profile {
 
   public ProfileDTO toDTO() {
     return new ProfileDTO(this.id, this.email, this.jobTitle, this.company, this.location, this.about,
-        this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null, this.skills,
+        this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null, this.savedJobs, this.skills,
         this.experiences, this.certifications);
   }
 

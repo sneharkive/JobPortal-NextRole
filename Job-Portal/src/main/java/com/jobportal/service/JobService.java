@@ -8,9 +8,6 @@ import com.jobportal.dto.ApplicantDTO;
 import com.jobportal.dto.JobDTO;
 import com.jobportal.exception.JobPortalException;
 
-import jakarta.validation.Valid;
-
-
 @Service
 public interface JobService {
 

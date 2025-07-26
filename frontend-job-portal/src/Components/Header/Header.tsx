@@ -15,10 +15,10 @@ const Header = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProfile(user.id)
+    getProfile(user?.id)
       .then((data: any) => {
         dispatch(setProfile(data));
-        console.log(data);
+        // console.log(data);
       })
       .catch((err: any) => {
         console.log(err);

@@ -48,7 +48,9 @@ public class JobServiceImpl implements JobService {
       applicants = new ArrayList<>();
     if (applicants.stream().filter((x) -> x.getApplicantId() == applicantDTO.getApplicantId()).toList().size() > 0)
       throw new JobPortalException("JOB_APPLIED_ALREADY");
+
     applicantDTO.setApplicationStatus(ApplicationStatus.APPLIED);
+
     applicants.add(applicantDTO.toEntity());
     job.setApplicants(applicants);
     jobRepository.save(job);

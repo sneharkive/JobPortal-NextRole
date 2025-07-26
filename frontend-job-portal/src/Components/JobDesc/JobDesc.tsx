@@ -1,12 +1,51 @@
 import { ActionIcon, Button, Divider } from "@mantine/core";
-import { IconBookmark } from "@tabler/icons-react";
+import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { card } from "../../Data/JobDescData";
 import { timeAgo } from "../../Service/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
 
-const JobDesc = (props:any) => {
+const JobDesc = (props: any) => {
   const data = DOMPurify.sanitize(props.description);
+
+  const dispatch = useDispatch();
+
+  const [applied, setApplied] = useState(false);
+
+  const profile = useSelector((state: any) => state.profile);
+  const user = useSelector((state: any) => state.user);
+
+  const handleSaveJob = () => {
+    let savedJobs = profile.savedJobs ? [...profile.savedJobs] : [];
+
+    if (savedJobs.includes(props.id))
+      savedJobs = savedJobs.filter((id) => id !== props.id);
+    else savedJobs.push(props.id);
+
+    const updatedProfile = { ...profile, savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
+
+  useEffect(() => {
+    if (props.applicants?.filter((applicant: any) => applicant.applicantId == user.id).length>0) 
+      setApplied(true);
+    
+  }, [props]);
+
+    const fixedProps = {
+    ...props,
+    jobType:
+      props.location === "Full Time" || props.location === "Part Time"
+        ? props.location
+        : props.jobType,
+    location:
+      props.jobType === "Remote" || props.jobType === "San Francisco"
+        ? props.jobType
+        : props.location,
+  };
 
   return (
     <div className="w-2/3">
@@ -18,21 +57,53 @@ const JobDesc = (props:any) => {
           <div className="flex flex-col gap-2">
             <div className="text-2xl font-semibold">{props.jobTitle}</div>
             <div className="text-gray-500 text-lg">
-              {props.company} &bull; {timeAgo(props.postTime)} &bull; {props.applicants? props.applicants.length : 0} applicants
+              {props.company} &bull; {timeAgo(props.postTime)} &bull;{" "}
+              {props.applicants ? props.applicants.length : 0} applicants
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-          <Link to={`/apply-job/${props.id}`} className="w-full"  >
-            <Button className="!text-xl !pb-1" color="#FDC700" variant="light">
-              {props.edit?"Edit":"Apply"}
+          
+
+
+          { (props.edit || !applied) &&
+            <Link to={`/apply-job/${props.id}`} className="w-full">
+              <Button
+                className="!text-xl !pb-1"
+                color="#FDC700"
+                variant="light"
+              >
+                {props.edit ? "Edit" : "Apply"}
+              </Button>
+            </Link>
+          }
+
+          {applied &&
+            <Button className="!text-xl !pb-1" color="green.8" variant="light">
+              Applied
             </Button>
-          </Link>
-          {props.edit?<Button className="!text-xl !pb-1" color="red" variant="outline">
+          }
+
+
+
+
+
+
+          {props.edit ? (
+            <Button className="!text-xl !pb-1" color="red" variant="outline">
               Delete
-            </Button>:
-          <IconBookmark className="text-amber-400/50 cursor-pointer hover:scale-108" />
-            }
+            </Button>
+          ) : profile.savedJobs?.includes(props.id) ? (
+            <IconBookmarkFilled
+              onClick={handleSaveJob}
+              className="!text-amber-400 cursor-pointer hover:!text-amber-500"
+            />
+          ) : (
+            <IconBookmark
+              onClick={handleSaveJob}
+              className="text-gray-300 cursor-pointer hover:text-amber-300"
+            />
+          )}
         </div>
       </div>
       <Divider my="xl" />
@@ -55,7 +126,10 @@ const JobDesc = (props:any) => {
               />
             </ActionIcon>
             <div className="text-gray-400">{item.name}</div>
-            <div className="font-semibold text-gray-300">{props?props[item.id]: "NA"} {item.id == "packageOffered" && <>LPA</>}</div>
+            <div className="font-semibold text-gray-300">
+              {fixedProps ? fixedProps[item.id] : "NA"}{" "}
+              {item.id === "packageOffered" && <>LPA</>}
+            </div>
           </div>
         ))}
       </div>
@@ -64,7 +138,7 @@ const JobDesc = (props:any) => {
       <div>
         <div className="text-xl font-semibold mb-5">Required Skills</div>
         <div className="flex flex-wrap gap-2">
-          {props?.skillsRequired?.map((sk:any, index:number) => (
+          {props?.skillsRequired?.map((sk: any, index: number) => (
             <ActionIcon
               variant="light"
               color="rgba(245, 193, 64, 1)"
@@ -95,7 +169,11 @@ const JobDesc = (props:any) => {
           <div className="flex justify-between mb-3 text-justify">
             <div className="flex gap-4 items-center">
               <div className="p-3 rounded-xl bg-zinc-700">
-                <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
+                <img
+                  className="h-8"
+                  src={`/Icons/${props.company}.png`}
+                  alt=""
+                />
               </div>
               <div className="flex flex-col">
                 <div className="text-lg font-semibold">{props.company}</div>
