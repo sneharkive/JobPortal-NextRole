@@ -1,4 +1,4 @@
-import { IconBriefcase, IconMapPin } from "@tabler/icons-react";
+import { IconBriefcase, IconMapPin, IconTimeline } from "@tabler/icons-react";
 
 const fields = [
   {
@@ -49,6 +49,22 @@ const fields = [
     ],
     // value: "New York, United States",
     leftSection: IconMapPin,
+  },
+  {
+    label: "Experience",
+    placeholder: "Enter Year of Experience",
+    // options: [
+    //   "Delhi",
+    //   "New York",
+    //   "San Francisco",
+    //   "London",
+    //   "Berlin",
+    //   "Tokyo",
+    //   "Sydney",
+    //   "Toronto",
+    // ],
+    // value: "New York, United States",
+    leftSection: IconTimeline,
   },
 ];
 export default fields;

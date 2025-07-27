@@ -74,7 +74,7 @@ const TalentCard = (props: any) => {
   };
 
   return (
-    <div className="max-w-[460px]  flex flex-col gap-6 my-4 bg-zinc-800 p-6 rounded-xl hover:border-amber-400 hover:border-2 ">
+    <div className="max-w-[450px]  flex flex-col gap-6 my-4 bg-zinc-800 p-6 rounded-xl hover:border-amber-400 hover:border-2 ">
       <div className="flex justify-between gap-4">
         <div className="p-2 rounded-xl bg-zinc-700 h-12">
           <img
@@ -124,7 +124,7 @@ const TalentCard = (props: any) => {
         </div>
       ) : (
         <div className="flex justify-between text-sm">
-          <div className="font-semibold text-md">70 LPA</div>
+          <div className="font-semibold text-md">Exp: {profile.totalExp? props.totalExp + " Years":"Freshers"} </div>
           <div className="flex items-center text-sm text-gray-400">
             <IconMapPin stroke={1.5} className="h-4 " /> {profile.location}
           </div>

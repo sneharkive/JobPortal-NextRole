@@ -1,21 +1,33 @@
-import { Combobox, InputBase, ScrollArea, useCombobox } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useCombobox, Combobox, InputBase, ScrollArea } from "@mantine/core";
+import { useState, useEffect } from "react";
 
 const SelectInput = (props: any) => {
-  useEffect(() => {
-    setData(props.options);
-    setValue(props.form.getInputProps(props.name).value);
-    setSearch(props.form.getInputProps(props.name).value);
-  }, []);
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-  });
-
   const [data, setData] = useState<string[]>([]);
   const [value, setValue] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
-  const exactOptionMatch = data.some((item) => item === search);
+  useEffect(() => {
+    // Safe check for options array
+    if (Array.isArray(props.options)) {
+      setData(props.options);
+    } else {
+      setData([]);
+      console.warn("props.options is not an array in SelectInput");
+    }
+
+    // Safe check for form and name
+    const initialValue = props.form?.getInputProps(props.name)?.value ?? "";
+    setValue(initialValue);
+    setSearch(initialValue);
+  }, []);
+
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  // Prevent crash if data is not a valid array
+  const exactOptionMatch = data?.some?.((item) => item === search) ?? false;
+
   const filteredOptions = exactOptionMatch
     ? data
     : data.filter((item) =>
@@ -79,11 +91,11 @@ const SelectInput = (props: any) => {
 
       <Combobox.Dropdown>
         <Combobox.Options>
-          <ScrollArea.Autosize mah={250} type="scroll" >
-          {options}
-          {!exactOptionMatch && search?.trim()?.length > 0 && (
-            <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
-          )}
+          <ScrollArea.Autosize mah={250} type="scroll">
+            {options}
+            {!exactOptionMatch && search.trim().length > 0 && (
+              <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
+            )}
           </ScrollArea.Autosize>
         </Combobox.Options>
       </Combobox.Dropdown>

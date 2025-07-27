@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import fields from "../../Data/Profile";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, Input } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
-  IconDeviceFloppy,
   IconEdit,
   IconBriefcase,
   IconMapPin,
   IconCheck,
   IconX,
+  IconTimeline,
 } from "@tabler/icons-react";
 import SelectInput from "./SelectInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,8 +33,20 @@ const Info = () => {
 
   const form = useForm({
     mode: "controlled",
-    initialValues: { jobTitle: "", company: "", location: "" },
+    initialValues: { jobTitle: "", company: "", location: "", totalExp: "" },
   });
+
+  useEffect(() => {
+  if (profile) {
+    form.setValues({
+      jobTitle: profile.jobTitle || "",
+      company: profile.company || "",
+      location: profile.location || "",
+      totalExp: profile.totalExp || "",
+    });
+  }
+}, [profile]);
+
 
   const handleSave = ( ) => {
     setEdit(false);
@@ -73,22 +85,41 @@ const Info = () => {
             <SelectInput form={form} name="jobTitle" {...select[0]} />
             <SelectInput form={form} name="company" {...select[1]} />
           </div>
-          <SelectInput form={form} name="location" {...select[2]} />
+          <div className="flex gap-10 [&>*]:w-1/2">
+            <SelectInput form={form} name="location" {...select[2]} />
+          {/* <SelectInput form={form} name="totalExp" {...select[3]} /> */}
+          <Input.Wrapper
+  label={select[3]?.label}
+>
+  <Input
+    type="number"
+    placeholder={select[3]?.placeholder}
+    {...form.getInputProps("totalExp")}
+    variant="unStyled"
+    classNames={{
+      input:
+        "bg-amber-200 focus:border-amber-300/30 border border-gray-400/10 px-2 rounded-lg",
+      wrapper:
+        "border border-gray-400/10 rounded-lg px-2 focus-within:border-amber-300/30 ",
+    }}
+  />
+</Input.Wrapper>
+          </div>
         </>
       ) : (
         <>
-          <div className="text-xl gap-1 flex items-center">
-            <IconBriefcase stroke={1.5} className="h-5" />
+          <div className="text-xl gap-6 flex items-center">
+<div className="flex items-center gap-1">
+              <IconBriefcase stroke={1.5} className="h-5" />
             {profile.jobTitle}
-            {"    "}
-            &bull;{"   "}
-            {profile.company}{" "}
+</div> <div className="flex items-center gap-1"> &bull;{"  "}
+            {profile.company}{" "}</div>           
           </div>
 
-          <div className="text-lg flex gap-1 items-center text-gary-300">
-            {" "}
-            <IconMapPin className="h-5 w-5" stroke={1.5} />
-            {profile.location}{" "}
+          <div className="text-lg flex gap-6 items-center text-gary-300">
+    <div className="flex items-center gap-1">        <IconMapPin className="h-5 w-5" stroke={1.5} />
+            {profile.location}</div> <div className="flex gap-1 items-center"> &bull; <IconTimeline className="h-5 w-5" stroke={1.5} />
+           {profile.totalExp? profile.totalExp + " Years of Experience":"Freshers"} </div>
           </div>
         </>
       )}

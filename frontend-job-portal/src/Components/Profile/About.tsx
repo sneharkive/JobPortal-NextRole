@@ -1,6 +1,5 @@
 import { ActionIcon, Textarea } from '@mantine/core'
-import { IconCheck, IconDeviceFloppy, IconEdit, IconX } from '@tabler/icons-react'
-import type { profile } from '../../Data/TalentData'
+import { IconCheck, IconEdit, IconX } from '@tabler/icons-react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SuccessNotification } from '../../Service/NotificationService';

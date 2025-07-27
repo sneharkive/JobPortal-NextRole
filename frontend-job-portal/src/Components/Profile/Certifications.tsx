@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core"
-import { IconPlus, IconDeviceFloppy, IconEdit, IconX } from "@tabler/icons-react"
+import { IconPlus, IconEdit, IconX } from "@tabler/icons-react"
 
 import CertiCard from "./CertiCard"
 import CertiInput from "./CertiInput"
