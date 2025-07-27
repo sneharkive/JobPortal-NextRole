@@ -1,12 +1,13 @@
-import { talents } from "../../Data/TalentData";
+import { useParams } from "react-router-dom";
 import TalentCard from "../FindTalents/TalentCard";
 
-const RecommendTalent = () => {
+const RecommendTalent = (props:any) => {
+  const {id} = useParams()
   return (
     <div>
       <div className="text-xl font-semibold mb-5">Recommend Talent</div>
       <div className="flex flex-col flex-wrap gap-5">
-        {talents.map((tal, index) => index<2 && <TalentCard key={index} {...tal}/>)}
+        {props?.talents.map((tal:any, index:any) => index<3 && id!=tal.id && <TalentCard key={index} {...tal}/>)}
       </div>
     </div>
   );

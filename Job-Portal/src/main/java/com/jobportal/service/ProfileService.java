@@ -1,5 +1,7 @@
 package com.jobportal.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jobportal.dto.ProfileDTO;
@@ -13,4 +15,6 @@ public interface ProfileService {
 
   public ProfileDTO updateProfile(ProfileDTO profileDTO) throws JobPortalException;
   // void deleteProfile(Long id);
+
+  public List<ProfileDTO> getAllProfile() throws JobPortalException;
 }
