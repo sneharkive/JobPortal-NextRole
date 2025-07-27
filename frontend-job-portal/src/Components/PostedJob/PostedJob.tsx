@@ -19,6 +19,7 @@ const PostedJob = (props:any) => {
             <Tabs.List className="[&_button]:!text-lg mb-5 font-semibold text-white [&_button[aria-selected='false']]:!bg-zinc-700 [&_button[data-active='true']]:!bg-amber-300 [&_button[data-active='true']]:!text-amber-800">
               <Tabs.Tab value="ACTIVE">Active [{props.jobList?.filter((job:any) => job?.jobStatus=="ACTIVE").length}] </Tabs.Tab>
               <Tabs.Tab value="DRAFT">Draft [{props.jobList?.filter((job:any) => job?.jobStatus=="DRAFT").length}]</Tabs.Tab>
+              <Tabs.Tab value="CLOSED">Closed [{props.jobList?.filter((job:any) => job?.jobStatus=="CLOSED").length}]</Tabs.Tab>
             </Tabs.List>
 
           </Tabs>

@@ -16,7 +16,7 @@ const PostedJobPage = () => {
       window.scroll(0,0);
       getJobPostedBy(user.id).then((res) => {
         setJobList(res);
-        if(res && res.length > 0 && Number(id) == 0) navigate(`/posted-job/${res[0].id}`)
+        if(res && res.length > 0 && Number(id) == 0) navigate(`/posted-jobs/${res[0].id}`)
         setJob(res.find((item:any) => item.id == id))
       }).catch((err) => console.log(err));
 

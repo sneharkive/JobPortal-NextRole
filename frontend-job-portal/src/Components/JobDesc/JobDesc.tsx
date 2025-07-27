@@ -7,6 +7,8 @@ import { timeAgo } from "../../Service/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { useEffect, useState } from "react";
+import { postJob } from "../../Service/JobService";
+import { ErrorNotification, SuccessNotification } from "../../Service/NotificationService";
 
 const JobDesc = (props: any) => {
   const data = DOMPurify.sanitize(props.description);
@@ -47,6 +49,15 @@ const JobDesc = (props: any) => {
         : props.location,
   };
 
+  const handleClose = (() => {
+    postJob({...props, jobStatus:"CLOSED"}).then((res) => {
+      SuccessNotification("Success", "Job Closed Successfully");
+    }).catch((err) => {
+      console.log(err)
+      ErrorNotification("Error", err.response.data.errorMessage);
+    })
+  })
+
   return (
     <div className="w-2/3">
       <div className="flex justify-between">
@@ -67,13 +78,13 @@ const JobDesc = (props: any) => {
 
 
           { (props.edit || !applied) &&
-            <Link to={`/apply-job/${props.id}`} className="w-full">
+            <Link to={props.edit ? `/post-job/${props.id}` :`/apply-job/${props.id}`} className="w-full">
               <Button
                 className="!text-xl !pb-1"
                 color="#FDC700"
                 variant="light"
               >
-                {props.edit ? "Edit" : "Apply"}
+                {props.closed ? "Reopen" : props.edit ? "Edit" : "Apply"}
               </Button>
             </Link>
           }
@@ -85,13 +96,9 @@ const JobDesc = (props: any) => {
           }
 
 
-
-
-
-
-          {props.edit ? (
-            <Button className="!text-xl !pb-1" color="red" variant="outline">
-              Delete
+          {props.edit && !props.closed? (
+            <Button className="!text-xl !pb-1" color="red" variant="outline" onClick={handleClose}>
+              Close
             </Button>
           ) : profile.savedJobs?.includes(props.id) ? (
             <IconBookmarkFilled
