@@ -19,6 +19,7 @@ const ApplicationForm = () => {
   const {id} = useParams();
 
   const user = useSelector((state: any) => state.user);
+  const profile = useSelector((state: any) => state.profile);
   
   const [preview, setPreview] = useState(false);
   const [submit, setSubmit] = useState(false);
@@ -51,13 +52,13 @@ const ApplicationForm = () => {
     mode: "controlled",
     validateInputOnChange: true,
     initialValues: {
-      name: "",
-      email: "",
-      phone: "",
-      website: "",
-      resume: null,
-      coverLetter: "",
-    },
+    name: user?.name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    website: user?.website || "",
+    resume: null,
+    coverLetter: "",
+  },
     validate: {
       name: isNotEmpty("Name is required"),
       email: isNotEmpty("email is required"),

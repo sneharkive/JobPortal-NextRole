@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 public class Profile {
   @Id
   private Long id;
+  private String name;
   private String email;
   private String jobTitle;
   private String company;
@@ -34,7 +35,7 @@ public class Profile {
   private List<Certification> certifications;
 
   public ProfileDTO toDTO() {
-    return new ProfileDTO(this.id, this.email, this.jobTitle, this.company, this.location, this.about,
+    return new ProfileDTO(this.id, this.name, this.email, this.jobTitle, this.company, this.location, this.about,
         this.picture != null ? Base64.getEncoder().encodeToString(this.picture) : null, this.savedJobs, this.skills,
         this.experiences, this.certifications);
   }

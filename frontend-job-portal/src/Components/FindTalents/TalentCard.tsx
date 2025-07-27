@@ -135,7 +135,7 @@ const TalentCard = (props: any) => {
         {!props.invited && (
           <>
             {" "}
-            <Link to="/talent-profile">
+            <Link to={`/talent-profile/${profile.id}`}>
               <Button color="#FDC700" fullWidth variant="outline">
                 Profile
               </Button>
