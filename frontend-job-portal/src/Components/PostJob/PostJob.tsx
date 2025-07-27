@@ -6,8 +6,13 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { postJob } from "../../Service/JobService";
 import { ErrorNotification, SuccessNotification } from "../../Service/NotificationService";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PostJob = () => {
+
+  const user = useSelector((state: any) => state.user);
+
+  
   const select = fields;
 
   const navigate = useNavigate();
@@ -44,9 +49,23 @@ const PostJob = () => {
   const handlePost = () => {
     form.validate()
     if(!form.isValid()) return;
-    postJob(form.getValues()).then((res) => {
+    postJob({...form.getValues(), postedBy:user.id, jobStatus: "ACTIVE" }).then((res) => {
       SuccessNotification("Success", "Job Posted Successfully");
-      navigate("/posted-job");
+      navigate(`/posted-job/${res.id}`);
+
+    }).catch((err) => {
+      console.log(err);
+      ErrorNotification("Error", err.response?.data?.message || "Something went wrong");
+    })
+    
+  }
+
+
+
+  const handleDraft = () => {
+    postJob({...form.getValues(), postedBy:user.id, jobStatus: "DRAFT" }).then((res) => {
+      SuccessNotification("Success", "Job Drafted Successfully");
+      navigate(`/posted-job/${res.id}`);
 
     }).catch((err) => {
       console.log(err);
@@ -102,7 +121,7 @@ const PostJob = () => {
           </Button>
 
           <Button
-            
+            onClick={handleDraft}
             color="#FDC700"
             variant="outline"
           >

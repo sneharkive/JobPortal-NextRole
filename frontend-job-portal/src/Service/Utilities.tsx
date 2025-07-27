@@ -42,4 +42,70 @@ function timeAgo(inputTime:string) {
   }
 
 
-export {formateDate, timeAgo, getBase64};
+  const formatInterviewDateTime = (date: Date | null): string => {
+  if (!date || isNaN(date.getTime())) return "";
+
+  return date.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
+//  const openBase64InNewTab = (base64Data: string, mimeType = "application/pdf") => {
+//   try {
+//     const cleanedBase64 = base64Data.split(",").pop() || base64Data;
+//     const byteCharacters = atob(cleanedBase64);
+//     const byteNumbers = Array.from(byteCharacters, char => char.charCodeAt(0));
+//     const byteArray = new Uint8Array(byteNumbers);
+//     const blob = new Blob([byteArray], { type: mimeType });
+
+//     const blobUrl = URL.createObjectURL(blob);
+
+//     // Try opening in a new tab
+//     const newTab = window.open(blobUrl, "_blank");
+
+//     if (!newTab || newTab.closed || typeof newTab.closed === "undefined") {
+//       alert("Popup blocked! Please allow popups for this website.");
+//     }
+//   } catch (error) {
+//     console.error("Failed to open resume:", error);
+//   }
+// };
+
+const openBase64InNewTab = (base64Data: string) => {
+  try {
+    const cleanedBase64 = base64Data.split(",").pop() || base64Data;
+    const byteCharacters = atob(cleanedBase64);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "application/pdf" }); // ✅ Ensure MIME type is correct
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Open in new tab
+    const newTab = window.open(blobUrl, "_blank");
+    if (!newTab) {
+      alert("Popup blocked! Please allow popups for this site.");
+    }
+  } catch (error) {
+    console.error("Failed to open PDF:", error);
+  }
+};
+
+
+
+
+
+// Duplicate export removed to avoid redeclaration error
+
+
+
+export {formateDate, timeAgo, getBase64, formatInterviewDateTime, openBase64InNewTab};
