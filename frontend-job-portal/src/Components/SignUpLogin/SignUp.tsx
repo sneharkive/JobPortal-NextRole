@@ -59,7 +59,7 @@ const SignUp = () => {
         setFormError({ ...formError, [name]: "Password do not match." });
       else setFormError({ ...formError, confirmPassword: "" });
     }
-    console.log(event.target);
+    // console.log(event.target);
   };
 
   const handleSubmit = () => {

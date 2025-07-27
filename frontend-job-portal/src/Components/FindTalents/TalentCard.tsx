@@ -23,7 +23,7 @@ const TalentCard = (props: any) => {
   const [profile, setProfile] = useState<any>({});
 
   useEffect(() => {
-    if (props.applicantId)
+    if (props.applicantId){
       getProfile(props.applicantId)
         .then((res) => {
           setProfile(res);
@@ -31,8 +31,11 @@ const TalentCard = (props: any) => {
         .catch((err) => {
           console.log(err);
         });
+      }
+
     else setProfile(props);
   }, [props]);
+
 
   const handleOffer = (status: string) => {
     let interview: any = {
@@ -80,11 +83,11 @@ const TalentCard = (props: any) => {
           <img
             className="w-8 h-8"
             src={
-              profile.picture
-                ? `data:image/jpeg;base64, ${profile.picture}`
+              profile?.picture
+                ? `data:image/jpeg;base64, ${profile?.picture}`
                 : "/avatar.png"
             }
-            alt={profile.name}
+            alt={profile?.name}
           />
         </div>
         <div>

@@ -35,4 +35,12 @@ const changePass = async (email:string, password:string) => {
   .catch(error => {throw error})
 }
 
-export {registerUser, loginUser, sendOtp, verifyOtp, changePass};
+
+// By Me
+const getUserById = async (id:any) => {
+  return axios.get(`${base_url}getUser${id}`)
+  .then(res => res.data)
+  .catch(error => {throw error})
+}
+
+export {registerUser, loginUser, sendOtp, verifyOtp, changePass,getUserById};

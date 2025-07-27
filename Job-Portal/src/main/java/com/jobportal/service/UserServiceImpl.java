@@ -50,11 +50,15 @@ public class UserServiceImpl implements UserService{
   public UserDTO registerUser(UserDTO userDTO) throws JobPortalException {
     Optional<User> opt = userRepository.findByEmail(userDTO.getEmail());
     if(opt.isPresent()) throw new JobPortalException("USER_FOUND");
-    userDTO.setProfileId(profileService.createProfile(userDTO.getEmail()));
+
+    userDTO.setProfileId(profileService.createProfile(userDTO.getEmail(), userDTO.getName()));
+
     userDTO.setId(Utilities.getNextSequence("users"));
     userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
     User user = userDTO.toEntity();
     user = userRepository.save(user);
+
     return user.toDTO();
   }
 
@@ -113,6 +117,12 @@ public class UserServiceImpl implements UserService{
     if (!expiredOtps.isEmpty()) 
       otpRepository.deleteAll(expiredOtps);
      
+  }
+
+
+  @Override
+  public UserDTO getUserById(Long id) throws JobPortalException {
+    return userRepository.findById(id).orElseThrow(() -> new JobPortalException("USER_NOT_FOUND")).toDTO();
   }
   
 

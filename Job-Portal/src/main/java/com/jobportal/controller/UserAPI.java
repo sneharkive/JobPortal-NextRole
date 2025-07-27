@@ -66,4 +66,12 @@ public class UserAPI {
   }
 
 
+
+  // By Me
+  @GetMapping("/getUser/{id}")
+  public ResponseEntity<UserDTO> verifyOtp(@PathVariable  Long id) throws JobPortalException  {
+    return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+  }
+
+
 }
