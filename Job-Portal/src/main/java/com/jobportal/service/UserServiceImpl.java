@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jobportal.dto.LoginDTO;
+import com.jobportal.dto.NotificationDTO;
 import com.jobportal.dto.ResponseDTO;
 import com.jobportal.dto.UserDTO;
 import com.jobportal.entity.OTP;
@@ -45,6 +46,9 @@ public class UserServiceImpl implements UserService{
   @Autowired
   private ProfileService profileService;
 
+  @Autowired
+  private NotificationService notificationService;
+
 
   @Override
   public UserDTO registerUser(UserDTO userDTO) throws JobPortalException {
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService{
 
     userDTO.setId(Utilities.getNextSequence("users"));
     userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
+    
     User user = userDTO.toEntity();
     user = userRepository.save(user);
 
@@ -106,6 +110,13 @@ public class UserServiceImpl implements UserService{
     User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow(() -> new JobPortalException("USER_NOT_FOUND"));
     user.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
     userRepository.save(user);
+
+    NotificationDTO noti = new NotificationDTO();
+    noti.setUserId(user.getId());
+    noti.setMessage("Password Reset Successful");
+    noti.setAction("Password Reset");
+    notificationService.sendNotification(noti);
+
     return new ResponseDTO("Password changed successfully.");
   }
 
