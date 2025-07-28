@@ -121,7 +121,7 @@ if (filter.Experience && filter.Experience.length > 0) {
       <div className="p-6">
         <div className="flex justify-between">
           <div className="text-2xl font-semibold ">Recommended Jobs</div>
-          <Sort />
+          <Sort sort="job"/>
         </div>
 
         <div className="flex flex-wrap gap-6 items-center justify-center">
