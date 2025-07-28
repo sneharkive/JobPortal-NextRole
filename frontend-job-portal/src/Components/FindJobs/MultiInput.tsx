@@ -1,48 +1,61 @@
-import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from '@mantine/core';
-import {  IconSelector } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
+import {
+  CheckIcon,
+  Combobox,
+  Group,
+  Pill,
+  PillsInput,
+  useCombobox,
+} from "@mantine/core";
+import { IconSelector } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateFilter } from "../../Slices/FilterSlice";
 
-const MultiInput = (props:any) => {
+const MultiInput = (props: any) => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setData(props.options || []);
     setValue(props.value || []);
-
-  }, []);
-
-
-
+  }, [props.options, props.value]);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+    onDropdownOpen: () => combobox.updateSelectedOptionIndex("active"),
   });
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [data, setData] = useState<string[]>([]);
   const [value, setValue] = useState<string[]>([]);
 
   const exactOptionMatch = data.some((item) => item === search);
 
   const handleValueSelect = (val: string) => {
-    setSearch('');
+    setSearch("");
 
-    if (val === '$create') {
+    if (val === "$create") {
+      const newValue = [...value, search];
       setData((current) => [...current, search]);
-      setValue((current) => [...current, search]);
+      setValue(newValue);
+      dispatch(updateFilter({ [props.title]: newValue }));
     } else {
-      setValue((current) =>
-        current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-      );
+      const newValue = value.includes(val)
+        ? value.filter((v) => v !== val)
+        : [...value, val];
+
+      setValue(newValue);
+      dispatch(updateFilter({ [props.title]: newValue }));
     }
   };
 
-  const handleValueRemove = (val: string) =>
+  const handleValueRemove = (val: string) => {
+    dispatch(updateFilter({ [props.title]: value.filter((v) => v !== val) }));
     setValue((current) => current.filter((v) => v !== val));
+  };
 
   const values = value.map((item) => (
     <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-      {item}
+      {item.length >= 10 ? item.substring(0, 8) + ".." : item}
     </Pill>
   ));
 
@@ -58,12 +71,22 @@ const MultiInput = (props:any) => {
     ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+    <Combobox
+      store={combobox}
+      onOptionSubmit={handleValueSelect}
+      withinPortal={false}
+    >
       <Combobox.DropdownTarget>
-        <PillsInput variant='unstyled' rightSection={<IconSelector/>} onClick={() => combobox.openDropdown()}
+        <PillsInput
+          variant="unstyled"
+          rightSection={<IconSelector />}
+          onClick={() => combobox.openDropdown()}
           leftSection={
-            <div className='text-amber-300 p-1 bg-zinc-700 rounded-full mr-3'><props.icon /></div>
-          }>
+            <div className="text-amber-300 p-1 bg-zinc-700 rounded-full mr-3">
+              <props.icon />
+            </div>
+          }
+        >
           <Pill.Group>
             {values}
 
@@ -72,13 +95,13 @@ const MultiInput = (props:any) => {
                 onFocus={() => combobox.openDropdown()}
                 onBlur={() => combobox.closeDropdown()}
                 value={search}
-                placeholder={props.title || 'Search...'}
+                placeholder={props.title || "Search..."}
                 onChange={(event) => {
                   combobox.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
                 onKeyDown={(event) => {
-                  if (event.key === 'Backspace' && search.length === 0) {
+                  if (event.key === "Backspace" && search.length === 0) {
                     event.preventDefault();
                     handleValueRemove(value[value.length - 1]);
                   }
@@ -90,22 +113,22 @@ const MultiInput = (props:any) => {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options
-        className="max-h-70 scroll-smooth overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700"
-        >
+        <Combobox.Options className="max-h-70 scroll-smooth overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700">
           {options}
 
           {!exactOptionMatch && search.trim().length > 0 && (
             <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
           )}
 
-          {exactOptionMatch && search.trim().length > 0 && options.length === 0 && (
-            <Combobox.Empty>Nothing found</Combobox.Empty>
-          )}
+          {exactOptionMatch &&
+            search.trim().length > 0 &&
+            options.length === 0 && (
+              <Combobox.Empty>Nothing found</Combobox.Empty>
+            )}
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
   );
-}
+};
 
 export default MultiInput;
