@@ -7,6 +7,7 @@ import ProfileMenu from "./ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../Service/ProfileService";
 import { setProfile } from "../../Slices/ProfileSlice";
+import NotiMenu from "./NotiMenu";
 
 const Header = () => {
   const user = useSelector((state: any) => state.user);
@@ -57,12 +58,12 @@ const Header = () => {
                 </Link>
               )}
 
-
-              <div className="hidden cursor-pointer text-gray-200  sm:block border-gray-600 border-2 rounded-full p-1">
+                {user ? <NotiMenu />: <></>}
+              {/* <div className="hidden cursor-pointer text-gray-200  sm:block border-gray-600 border-2 rounded-full p-1">
                 <Indicator processing color="yellow.6">
                   <IconBell size={19}  className="transition hover:scale-120" />
                 </Indicator>
-              </div>
+              </div> */}
               <div className="block md:hidden">
                 <button
                   onClick={menuHandler}

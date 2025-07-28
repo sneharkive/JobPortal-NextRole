@@ -14,10 +14,9 @@ import com.jobportal.repository.NotificationRepository;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
-  
+
   @Autowired
   private NotificationRepository notificationRepo;
-
 
   @Override
   public void sendNotification(NotificationDTO notificationDTO) throws JobPortalException {
@@ -28,10 +27,17 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public List<Notification> getUnreadNotification(Long userId) {
+  public List<Notification> getUnreadNotification(Long userId) throws JobPortalException {
     return notificationRepo.findByUserIdAndStatus(userId, NotificationStatus.UNREAD);
   }
 
-  
+  @Override
+  public void readNotification(Long id) throws JobPortalException {
+    Notification noti = notificationRepo.findById(id)
+        .orElseThrow(() -> new JobPortalException("No Notification Found"));
+
+    noti.setStatus(NotificationStatus.READ);
+    notificationRepo.save(noti);
+  }
 
 }

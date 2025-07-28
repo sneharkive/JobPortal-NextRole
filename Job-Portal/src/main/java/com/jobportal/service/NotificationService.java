@@ -11,5 +11,6 @@ import com.jobportal.exception.JobPortalException;
 @Service
 public interface NotificationService {
   public void sendNotification(NotificationDTO notificationDTO) throws JobPortalException ;
-  public List<Notification> getUnreadNotification(Long userId);
+  public List<Notification> getUnreadNotification(Long userId) throws JobPortalException;
+  public void readNotification(Long id) throws JobPortalException;
 }
