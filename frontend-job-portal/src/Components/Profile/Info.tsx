@@ -8,7 +8,7 @@ import {
   IconMapPin,
   IconCheck,
   IconX,
-  IconTimeline,
+  IconBriefcase2,
 } from "@tabler/icons-react";
 import SelectInput from "./SelectInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,7 +87,7 @@ const Info = () => {
           </div>
           <div className="flex gap-10 [&>*]:w-1/2">
             <SelectInput form={form} name="location" {...select[2]} />
-          {/* <SelectInput form={form} name="totalExp" {...select[3]} /> */}
+          {/* <NumberInput label="Experience" hideControls clampBehavior="strict" /> */}
           <Input.Wrapper
   label={select[3]?.label}
 >
@@ -116,10 +116,11 @@ const Info = () => {
             {profile.company}{" "}</div>           
           </div>
 
-          <div className="text-lg flex gap-6 items-center text-gary-300">
+          <div className="text-lg flex flex-col items-start text-gary-300">
     <div className="flex items-center gap-1">        <IconMapPin className="h-5 w-5" stroke={1.5} />
-            {profile.location}</div> <div className="flex gap-1 items-center"> &bull; <IconTimeline className="h-5 w-5" stroke={1.5} />
-           {profile.totalExp? profile.totalExp + " Years of Experience":"Freshers"} </div>
+            {profile.location}</div> <div className="flex gap-1 items-center"> </div>
+    <div className="flex items-center gap-1"> <IconBriefcase2 className="h-5 w-5" stroke={1.5} />
+          Experience: {profile.totalExp? profile.totalExp + " Years":"Freshers"} </div>
           </div>
         </>
       )}
