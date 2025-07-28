@@ -6,6 +6,7 @@ import { getAllJobs } from "../../Service/JobService";
 import { LoadingOverlay } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../../Slices/FilterSlice";
+import { resetSort } from "../../Slices/SortSlice";
 
 const Jobs = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,13 @@ const Jobs = () => {
   const [loading, setLoading] = useState(false);
 
   const filter = useSelector((state: any) => state.filter);
+  const sort = useSelector((state: any) => state.sort);
   const [filteredJobs, setFilteredJobs] = useState<any>([]);
 
   useEffect(() => {
     setLoading(true);
     dispatch(resetFilter());
+    dispatch(resetSort());
     getAllJobs()
       .then((res) => {
         setJobList(res.filter((job: any) => job.jobStatus == "ACTIVE"));
@@ -28,6 +31,21 @@ const Jobs = () => {
         console.error("Error fetching jobs:", err);
       });
   }, []);
+
+
+  useEffect(() => {
+    if(sort == "Most Recent")
+      setJobList([...jobList].sort((a:any, b:any) => new Date(b.postTime).getTime() - new Date(a.postTime).getTime()));
+
+    else if(sort == "Salary: (Low to High)")
+      setJobList([...jobList].sort((a:any, b:any) => a.packageOffered - b.packageOffered));
+
+    else if(sort == "Salary: (High to Low)")
+      setJobList([...jobList].sort((a:any, b:any) => b.packageOffered - a.packageOffered));
+
+
+  }, [sort])
+
 
   useEffect(() => {
     let filterJobList = jobList;
@@ -89,6 +107,7 @@ if (filter.Experience && filter.Experience.length > 0) {
 
     setFilteredJobs(filterJobList);
   }, [filter, jobList]);
+
 
   return (
     <>
