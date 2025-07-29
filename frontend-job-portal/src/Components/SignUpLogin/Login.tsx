@@ -7,7 +7,7 @@ import {
 } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../Service/UserService";
+// import { loginUser } from "../../Service/UserService";
 import { useState } from "react";
 import { loginValidation } from "../../Service/FormValidation";
 import { useDisclosure } from "@mantine/hooks";
@@ -18,6 +18,11 @@ import {
   SuccessNotification,
 } from "../../Service/NotificationService";
 import { setUser } from "../../Slices/UserSlice";
+import { setJwt } from "../../Slices/JwtSlice";
+import { loginUser } from "../../Service/AuthService";
+
+import {jwtDecode} from 'jwt-decode';
+
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -56,14 +61,17 @@ const Login = () => {
     setLoading(true);
       loginUser(data)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           SuccessNotification(
             "Login Successful",
             "Redirecting to Home Page..."
           );
+          dispatch(setJwt(res.jwt));
+          const decoded = jwtDecode(res.jwt);
+          dispatch(setUser({...decoded, email:decoded.sub}))
           setTimeout(() => {
             setLoading(false);
-            dispatch(setUser(res));
+            // dispatch(setUser(res));
             navigate("/");
           }, 2000);
         })

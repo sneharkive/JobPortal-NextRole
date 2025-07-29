@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -21,8 +23,18 @@ public class JwtHelper {
     }
 
     // Generate Token
-    public String generateToken(UserDetails userDetails ) {
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        CustomUserDetails customUser = (CustomUserDetails) userDetails;
+
+        // Add custom claims
+        claims.put("id", customUser.getId());
+        claims.put("name", customUser.getName());
+        claims.put("accountType", customUser.getAccountType());
+        claims.put("profileId", customUser.getProfileId());
+
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -64,4 +76,3 @@ public class JwtHelper {
                 .getBody();
     }
 }
-

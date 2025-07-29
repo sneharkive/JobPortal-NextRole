@@ -1,5 +1,7 @@
 package com.jobportal.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.jobportal.jwt.JwtAuthenticationEntryPoint;
 import com.jobportal.jwt.JwtAuthenticationFilter;
@@ -24,23 +27,27 @@ public class SecurityConfig {
 
   
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      // http.authorizeHttpRequests((req) ->
-      // req.requestMatchers("/**")
-      // .permitAll().anyRequest().authenticated());
-      // http.csrf(csrf->csrf.disable());
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-      // return http.build();
-
-      http.csrf(csrf -> csrf.disable())
-              .authorizeRequests(requests -> requests
-                      .requestMatchers("/auth/login", "/users/register", "/users/verifyOtp/**", "/user/sendOtp/**").permitAll()
-                      .anyRequest()
-                      .authenticated()).exceptionHandling(ex -> ex.authenticationEntryPoint(point))
-              .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    http
+        .cors(cors -> cors.configurationSource(request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            config.setAllowedHeaders(Arrays.asList("*"));
+            config.setAllowCredentials(true);
+            return config;
+        }))
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(requests -> requests
+            .requestMatchers("/auth/login", "/users/register", "/users/verifyOtp/**", "/user/sendOtp/**").permitAll()
+            .anyRequest().authenticated())
+        .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
     http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+
     return http.build();
-  }
+}
 
 }

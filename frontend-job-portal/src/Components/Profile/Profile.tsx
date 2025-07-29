@@ -37,8 +37,8 @@ const Profile = () => {
         >
           <Avatar
             className="!w-48 !h-48 absolute -bottom-1/3 left-1 border-6 border-gray-700 rounded-full"
-            src={profile.picture ? `data:image/jpeg;base64, ${profile.picture}` : "/avatar.png"}
-            alt={user.name}
+            src={profile?.picture ? `data:image/jpeg;base64, ${profile?.picture}` : "/avatar.png"}
+            alt={user?.name}
           />
           {hovered && (
             <Overlay

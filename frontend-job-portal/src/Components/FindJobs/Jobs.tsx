@@ -49,7 +49,6 @@ const Jobs = () => {
 
   useEffect(() => {
     let filterJobList = jobList;
-    console.log(filter);
 
     if (filter["Job Title"] && filter["Job Title"].length > 0)
       filterJobList = filterJobList.filter((job: any) =>

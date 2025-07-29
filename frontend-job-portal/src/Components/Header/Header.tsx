@@ -1,22 +1,34 @@
 import { useEffect, useState } from "react";
-import { IconAsset, IconBell } from "@tabler/icons-react";
-import { Button, Indicator } from "@mantine/core";
+import { IconAsset } from "@tabler/icons-react";
+import { Button } from "@mantine/core";
 import NavLinks from "./NavLinks";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../Service/ProfileService";
 import { setProfile } from "../../Slices/ProfileSlice";
 import NotiMenu from "./NotiMenu";
+import { jwtDecode } from "jwt-decode";
+import { setUser } from "../../Slices/UserSlice";
+import { setupResponseInterceptor } from "../../Interceptor/AxiosInterceptor";
 
 const Header = () => {
   const user = useSelector((state: any) => state.user);
+  const token = useSelector((state: any) => state.jwt);
   const location = useLocation();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProfile(user?.id)
+    setupResponseInterceptor(navigate);
+  }, [navigate]);
+  
+  useEffect(() => {
+    if (token != "") {
+      const decoded = jwtDecode(localStorage.getItem("token") || "");
+      dispatch(setUser({ ...decoded, email: decoded.sub }));
+    }
+    getProfile(user?.profileId)
       .then((data: any) => {
         dispatch(setProfile(data));
         // console.log(data);
@@ -24,7 +36,7 @@ const Header = () => {
       .catch((err: any) => {
         console.log(err);
       });
-  }, []);
+  }, [token, navigate]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,7 +70,7 @@ const Header = () => {
                 </Link>
               )}
 
-                {user ? <NotiMenu />: <></>}
+              {user ? <NotiMenu /> : <></>}
               {/* <div className="hidden cursor-pointer text-gray-200  sm:block border-gray-600 border-2 rounded-full p-1">
                 <Indicator processing color="yellow.6">
                   <IconBell size={19}  className="transition hover:scale-120" />

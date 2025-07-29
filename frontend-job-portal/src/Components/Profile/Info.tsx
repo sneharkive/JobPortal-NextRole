@@ -58,7 +58,7 @@ const Info = () => {
   return (
     <>
       <div className="text-3xl font-semibold flex justify-between">
-        {user.name}{" "}
+        {user?.name}{" "}
         <div>
           {edit && <ActionIcon
             variant="subtle"
