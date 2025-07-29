@@ -20,6 +20,8 @@ public interface UserService {
 
   public ResponseDTO changePassword(LoginDTO loginDTO) throws JobPortalException;
 
+  public UserDTO getUserByEmail(String email) throws JobPortalException ;
+
   // By Me
 
   public UserDTO getUserById(Long id) throws JobPortalException ;

@@ -100,7 +100,6 @@ public class JobServiceImpl implements JobService {
           try {
             notificationService.sendNotification(notiDTO);
           } catch (JobPortalException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
           }
         }
