@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,5 +38,12 @@ public class NotificationAPI {
   public ResponseEntity<ResponseDTO> readNotifications(@PathVariable Long id) throws JobPortalException{
     notiService.readNotification(id);
     return new ResponseEntity<>(new ResponseDTO("Success"), HttpStatus.OK);
+  }
+
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<ResponseDTO> deleteNotifications(@PathVariable Long id) throws JobPortalException{
+    notiService.deleteNotification(id);
+    return new ResponseEntity<>(new ResponseDTO("Notification Delete SuccessFully"), HttpStatus.OK);
   }
 }

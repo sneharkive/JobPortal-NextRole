@@ -13,4 +13,5 @@ public interface NotificationService {
   public void sendNotification(NotificationDTO notificationDTO) throws JobPortalException ;
   public List<Notification> getUnreadNotification(Long userId) throws JobPortalException;
   public void readNotification(Long id) throws JobPortalException;
+  public void deleteNotification(Long id) throws JobPortalException;
 }

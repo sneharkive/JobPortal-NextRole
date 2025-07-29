@@ -9,7 +9,7 @@ const PostedJobDesc = (props:any) => {
 
   const handleTabChange = (value:any) => {
     setTab(value);
-    if(value == "applicant")
+    if(value == "applicants")
       setArr(props.applicants?.filter((x:any) => x.applicationStatus == "APPLIED" ))
     else if(value == "invited")
       setArr(props.applicants?.filter((x:any) => x.applicationStatus == "INTERVIEWING" ))
@@ -50,7 +50,7 @@ const PostedJobDesc = (props:any) => {
           </Tabs.Panel>
           <Tabs.Panel value="applicants">
             <div className="flex flex-wrap gap-6 items-center justify-center">
-              {arr?.length?arr.map((tal:any, index:number) => (
+              {arr?.length?arr?.map((tal:any, index:number) => (
                 <TalentCard key={index} {...tal} posted={true} />
               )): <div className="text-2xl font-semibold">No Applicants</div>}
             </div>

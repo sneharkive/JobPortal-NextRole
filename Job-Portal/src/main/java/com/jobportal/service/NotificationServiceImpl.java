@@ -40,4 +40,12 @@ public class NotificationServiceImpl implements NotificationService {
     notificationRepo.save(noti);
   }
 
+  @Override
+  public void deleteNotification(Long id) throws JobPortalException {
+    Notification notification = notificationRepo.findById(id)
+        .orElseThrow(() -> new JobPortalException("Notification not found with ID: " + id));
+
+    notificationRepo.delete(notification);
+  }
+
 }

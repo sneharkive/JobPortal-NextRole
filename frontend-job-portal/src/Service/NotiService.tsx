@@ -13,5 +13,11 @@ const readNotifications = async (id:any) => {
   .catch(error => {throw error});
 }
 
-export {getNotifications,readNotifications}
+const deleteNotifications = async (id:any) => {
+  return axios.delete(`${base_url}delete/${id}`)
+  .then (res => res.data)
+  .catch(error => {throw error});
+}
+
+export {getNotifications,readNotifications,deleteNotifications}
 
